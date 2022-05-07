@@ -5,9 +5,47 @@
 
 const substitutionModule = (function () {
   // you can add any code you want within this function scope
+      let realAlphabet = "abcdefghijklmnopqrstuvwxyz".split("");
+
 
   function substitution(input, alphabet, encode = true) {
     // your solution code here
+    if (!alphabet) return false;
+      if (alphabet.length != 26) return false;
+      for (let i = 0; i < input.length; i++) {
+        if (alphabet.indexOf(input[i]) != alphabet.lastIndexOf(input[i]))
+          return false;
+      }
+      if (encode) return subEncode(input, alphabet);
+      return subDecode(input, alphabet);
+    }
+  
+    function subEncode(input, alphabet) {
+      let codeMessage = [];
+      input = input.toLowerCase();
+      for (let i = 0; i < input.length; i++) {
+        let codeIndex = realAlphabet.indexOf(input[i]);
+        let codeLetter = alphabet[codeIndex];
+        if (codeIndex < 0) {
+          codeMessage.push(input[i]);
+        }
+        codeMessage.push(codeLetter);
+        console.log(codeLetter);
+      }
+      return codeMessage.join("");
+    }
+  
+    function subDecode(input, alphabet) {
+      let decodeMessage = [];
+      for (let i = 0; i < input.length; i++) {
+        let decodeIndex = alphabet.indexOf(input[i]);
+        let decodeLetter = realAlphabet[decodeIndex];
+        if (decodeIndex < 0) {
+          decodeMessage.push(input[i]);
+        }
+        decodeMessage.push(decodeLetter);
+      }
+      return decodeMessage.join("");
   }
 
   return {
